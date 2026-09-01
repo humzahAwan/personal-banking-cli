@@ -1,0 +1,164 @@
+# Categorization Rules for hledger Plain Text Accounting
+# Format:
+#   pattern: Case-insensitive regex matching merchant or description
+#   account: Target hledger double-entry account
+
+rules:
+  # ==============================================================================
+  # 1. INTERNAL & INTER-ACCOUNT TRANSFERS
+  # ==============================================================================
+  - pattern: "(?i)INTERNAL TRANSFER|FUNDS TRANSFER"
+    account: "assets:transfers:internal"
+
+  - pattern: "(?i)AMERICAN EXP"
+    account: "assets:transfers:amex"
+
+  - pattern: "(?i)AT26\\d+"
+    account: "assets:transfers:amex"
+
+  # ==============================================================================
+  # 2. HOUSEHOLD BILLS, UTILITIES & FIXED HOUSING
+  # ==============================================================================
+  - pattern: "(?i)BRISTOL CC L TAX|COUNCIL TAX"
+    account: "expenses:tax:council"
+
+  - pattern: "(?i)SO ENERGY|GOOD ENERGY|OCTOPUS|BRITISH GAS"
+    account: "expenses:utilities:energy"
+
+  - pattern: "(?i)BRISTOLWESSEXWATER|WESSEX WATER"
+    account: "expenses:utilities:water"
+
+  - pattern: "(?i)VIRGIN MEDIA"
+    account: "expenses:utilities:internet"
+
+  - pattern: "(?i)TALKMOBILE|EE LIMITED|VODAFONE|O2|GIFFGAFF|THREE"
+    account: "expenses:telecom:mobile"
+
+  - pattern: "(?i)HOME INSURANCELBIS|HOME INSURANCE"
+    account: "expenses:insurance:home"
+
+  - pattern: "(?i)NATIONWIDE B S"
+    account: "expenses:housing:mortgage"
+
+  # ==============================================================================
+  # 3. FINANCE, DEBT & REMITTANCE
+  # ==============================================================================
+  - pattern: "(?i)FIRST DIRECT LOAN|V12 RETAIL FINANCE"
+    account: "expenses:finance:loans"
+
+  - pattern: "(?i)INTEREST CHARGE"
+    account: "expenses:finance:interest"
+
+  - pattern: "(?i)HMCTSFIXEDPENALTY"
+    account: "expenses:finance:fines"
+
+  - pattern: "(?i)WUI GBP MC"
+    account: "expenses:finance:remittance"
+
+  # ==============================================================================
+  # 4. GROCERIES, SUPERMARKETS & CONVENIENCE
+  # ==============================================================================
+  - pattern: "(?i)TESCO|SAINSBURY|ASDA|WAITROSE|ALDI|LIDL|MORRISONS|MARKS&SPENCER|M&S|SPAR|CO-OP|LOCALZ|COSTCUTTER|PREMIER SHOP|PREMIER BIG SAVER|SOUTHERN CO-OP|ZAYTUN|SWEET MART|DUNYA|KARWAN|STAR FOOD|SOUTHVILLE DELI|BANANA BOAT|HASKE|GILL CONVENIENCE|GOOD FOOD PLUS|ASHLEY CONVENIENCE|BUS STOP NEWS|PPOINT|PATS NEWS|BUDGET BOOZE|BARGAINZ|NO\\.1 OFF LICENCE|MONTPELIER LOCAL|BETTER FOO|BRISTOL  24 HRS|SPRINTER|LA DUNA MINIMARKET|FOOD \\+"
+    account: "expenses:groceries"
+
+  # ==============================================================================
+  # 5. DINING, RESTAURANTS, CAFES & TAKEAWAYS
+  # ==============================================================================
+  - pattern: "(?i)DELIVEROO|UBER \\*EATS|JUST EAT|CHEATMEALS|MISS MILLIES|KABUL GRILL|KOTTU HUT|JEEVAN SWEETS|GOURMET WA|TAKA TAKA|ZARA RESTAURANT|UPPER CRUST|ZHYHAN|NANDOS|OYINALCISINE|FOOD & DRINK"
+    account: "expenses:dining:takeaway"
+
+  - pattern: "(?i)PARSONS BA|CORNISH BAKEHOUSE|CANTEEN|SUNDIAL KITCHE|BIBLOS|BRISTOL LE|ZAM ZAM|BLUE FIN BUILDING|COSTA COFFEE|CAFFE TROPEA|CHAPTER 72"
+    account: "expenses:dining:cafes"
+
+  # ==============================================================================
+  # 6. PUBS, BARS, LIVE MUSIC VENUES & NIGHTLIFE
+  # ==============================================================================
+  - pattern: "(?i)THE PLOUGH|RED LION|COSIES|STRANGE BREW|JAM JA|THE CHELSEA|LOCO KLUB|LOST HORIZ|MICKEY ZOGGS|THE CROWN|THE STAR|TO THE MOON|HILLGR|WIPER AND TRUE|DUKE OF YORK|RONNIE SCOTTS|SUGAR LOAF|CLUB 395|THE DAME|THE FARM|CADBURY HOUSE|GREENBANK|SPOTTED COW|FULL MOON|BASEMENT 45|LAKOTA|CRITERION BAR|VARISPEED|THREE NINE|ARTSPACE|DISSONANCE|DEAD SODA|GREEN WORK|TRINITY CENTRE|EXCHANGE|THE CIDER|THE CROFT|OLD STILLAGE|GUERRILLA|UG ARTS|DARE TO CLUB|BRISTOL FRINGE|BLUE LAGOON|PHOENIX PUB|NQ64|ROUND TABLE ENTERP|OC WOH|ACCIDENTAL|SENTIENT R|COLLECTOR|EASTVI|GOODENTIME|LILYS BAR|ISLINGTON ARTS|LAUGHING Y|ROUND 1"
+    account: "expenses:leisure:bars-pubs"
+
+  # ==============================================================================
+  # 7. TRANSPORT, DRIVING & TRAVEL
+  # ==============================================================================
+  - pattern: "(?i)TFL TRAVEL|FIRST WEST OF ENGL|TRAINLINE|GWR|NATIONAL RAIL|CROSSCOUNTRY|BV CARS"
+    account: "expenses:transport:public"
+
+  - pattern: "(?i)UBER   \\*TRIP|BOLT|FREE NOW"
+    account: "expenses:transport:taxi"
+
+  - pattern: "(?i)SHELL|RONTEC|TESCO PFS|TESCO PAY AT PUMP|APPLEGREEN|BP |ESSO"
+    account: "expenses:transport:fuel"
+
+  - pattern: "(?i)MOTOR PARTS DIRECT|HALFORDS|DVLA|FIRSTCENTRALSERV|AA INSURANCE|RINGO BRISTOL|BRISTOL AIRPORT|TTC DRIVER|AIR-SERV|COX AND WHITE"
+    account: "expenses:transport:auto"
+
+  - pattern: "(?i)BUTLINS|AIRBNB|HOTEL INDIGO|SOPWELL HOUSE|JET2\\.COM"
+    account: "expenses:travel:accommodation"
+
+  # ==============================================================================
+  # 8. HOME DIY, MAINTENANCE & FURNISHINGS
+  # ==============================================================================
+  - pattern: "(?i)B & Q|SCREWFIX|TOOLSTATION|WICKES|THE RANGE|ALIDE PLANT|LS GREENS|EASTWOOD PARK|RAJANI|EMMAUS"
+    account: "expenses:home:diy"
+
+  # ==============================================================================
+  # 9. HEALTH, FITNESS & PERSONAL CARE
+  # ==============================================================================
+  - pattern: "(?i)DOWNEND BOXING|HENGROVE PARK LEIS|LEX LEISURE|EVERYONE ACTIVE|PARKWOOD|DW BRISTOL"
+    account: "expenses:fitness:sports"
+
+  - pattern: "(?i)BOOTS|SUPERDRUG|NHSBSA|HENGROVE PHARMACY"
+    account: "expenses:health:pharmacy"
+
+  - pattern: "(?i)THERAPY|ISEULT SMITH"
+    account: "expenses:health:medical"
+
+  - pattern: "(?i)TOP TO TOE|SERENITY ROOM"
+    account: "expenses:personal-care"
+
+  # ==============================================================================
+  # 10. PETS
+  # ==============================================================================
+  - pattern: "(?i)PETS AT HOME|VETSURE|QUALITY PET CARE|CATS PROTECTION"
+    account: "expenses:pets"
+
+  # ==============================================================================
+  # 11. HOBBIES, MUSIC & TECH SUBSCRIPTIONS
+  # ==============================================================================
+  - pattern: "(?i)PLANET WAX|DISC WORLD|MICKLEBURGH|BISHOP E M|RECORDS|ABLETON|OMNI ARTISTS"
+    account: "expenses:hobbies:music"
+
+  - pattern: "(?i)GOOGLE ONE|GOOGLE PLAY|APPLE\\.COM|PLAYSTATION|SPOTIFY|NETFLIX|SKY DIGITAL|SKY SUBSCRIPTION|UBER   \\*ONE|REAL DEBRID"
+    account: "expenses:subscriptions:tech"
+
+  - pattern: "(?i)TEMU|AMAZON|EBAY|POST OFFICE|B&M RETAIL|B&M |PARCEL2GO|ABRACADABR|ST PETERS HOSPICE|NNENNA CROCHET|TKMAXX|WH SMITH|BRISTOL BAZAAR|FONE REVIVE|MOBILE LAB|MARKVION"
+    account: "expenses:shopping:general"
+
+  - pattern: "(?i)PAYPAL PAYMENT"
+    account: "expenses:shopping:paypal"
+
+  # ==============================================================================
+  # 12. INCOME & INFLOWS
+  # ==============================================================================
+  - pattern: "(?i)GROSS INTEREST"
+    account: "income:interest"
+
+  - pattern: "(?i)PERFORMING RIGHT S|SAWMILLS BRISTOL"
+    account: "income:music"
+
+  - pattern: "(?i)RENT"
+    account: "income:rent"
+
+  - pattern: "(?i)POCKET MONEY"
+    account: "income:family:pocket-money"
+
+  - pattern: "(?i)VIRGIN INTERNET|BILLS|COUNCIL TAX"
+    account: "income:reimbursements:household"
+
+  - pattern: "(?i)SLC RECEIPTS"
+    account: "income:education:slc"
+
+  - pattern: "(?i)CASH IN P\\.O\\."
+    account: "assets:cash:deposit"
+
+  - pattern: "(?i)NICK|SARAH|MICHAEL SAKYI|GUSTAVO|RIESH|MARIESHA|LEWIS THOMPSON|HUGO STOCK|NEO MCGRATH|BENJAMIN HOLT|NICHOLAS BOWDEN|JENNIFER LAU|JULIUS|UNCLE KEN|FLETCHER AL|WOOLLARD|S ALADE|ELLA BUFTON|AWAN S         G  SAVINGS"
+    account: "assets:transfers:personal"

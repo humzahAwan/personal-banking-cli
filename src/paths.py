@@ -30,11 +30,20 @@ class Paths:
         return self.config_dir / "config.yaml"
 
     @property
+    def rules_file(self) -> Path:
+        """Looks for rules.yaml in current working directory first, then ~/.config/banking/."""
+        local_rules = Path("rules.yaml")
+        if local_rules.is_file():
+            return local_rules
+        return self.config_dir / "rules.yaml"
+
+    @property
     def sync_state_file(self) -> Path:
         return self.state_dir / "sync_state.json"
 
 
 PATHS = Paths()
+paths = PATHS
 
 if __name__ == "__main__":
     print(f"Config Dir:     {PATHS.config_dir}")

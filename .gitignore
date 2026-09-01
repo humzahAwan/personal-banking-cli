@@ -10,3 +10,5 @@ __pycache__/init
 .venv/
 venv/
 
+# Transaction Journals
+data/

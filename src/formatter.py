@@ -5,33 +5,33 @@ accounting format compliant with hledger.
 """
 
 import logging
-from typing import Any, Dict
+from typing import Any
 
 import yaml
 
-from paths import paths
+from .paths import PATHS
 
 logger = logging.getLogger(__name__)
 
 # Load configuration for default settings
-if paths.config_file.is_file():
-    with open(paths.config_file, "r", encoding="utf-8") as f:
+if PATHS.config_file.is_file():
+    with open(PATHS.config_file, "r", encoding="utf-8") as f:
         config = yaml.safe_load(f) or {}
 else:
     config = {}
 
 
-def get_account_name(account_id: int, cfg: Dict[str, Any]) -> str:
+def get_account_name(account_id: int, config: dict[str, Any]) -> str:
     """Look up the hledger account name for a Lunchflow account ID.
 
     Args:
         account_id: Numeric Lunchflow account identifier.
-        cfg: Parsed configuration dictionary containing account mappings.
+        config: Parsed configuration dictionary containing account mappings.
 
     Returns:
         The mapped hledger account name (e.g. 'assets:bank:home').
     """
-    accounts = cfg.get("accounts", {})
+    accounts = config.get("accounts", {})
     account_info = accounts.get(account_id) or accounts.get(str(account_id))
     if not account_info:
         logger.warning("Account ID %s not found in configuration", account_id)
@@ -40,7 +40,7 @@ def get_account_name(account_id: int, cfg: Dict[str, Any]) -> str:
 
 
 def format_transaction(
-    tx: Dict[str, Any],
+    tx: dict[str, Any],
     account_name: str,
     category_name: str,
     currency_symbol: str = "£",
@@ -120,8 +120,6 @@ if __name__ == "__main__":
     defaults = config.get("defaults", {})
     category = defaults.get("expense_account", "expenses:unclassified")
 
-    formatted = format_transaction(
-        sample_tx, account_name=bank, category_name=category
-    )
+    formatted = format_transaction(sample_tx, account_name=bank, category_name=category)
     print("\n--- Output Test ---")
     print(formatted)

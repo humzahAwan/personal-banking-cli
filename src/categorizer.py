@@ -6,7 +6,7 @@ to determine double-entry expense and income accounts.
 
 import logging
 import re
-from typing import Any, Optional
+from typing import Any
 
 import yaml
 
@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 class Categorizer:
     """Categorizes transactions into hledger accounts using regex patterns."""
 
-    def __init__(self, rules: Optional[list[dict[str, str]]] = None) -> None:
+    def __init__(self, rules: list[dict[str, str]] | None = None) -> None:
         """Initialize categorizer with rules or load from PATHS.rules_file."""
         if rules is not None:
             raw_rules = rules
@@ -39,7 +39,7 @@ class Categorizer:
             except re.error as e:
                 logger.error("Invalid regex in rule '%s': %s", r.get("pattern"), e)
 
-    def categorize(self, tx: dict[str, Any], defaults: dict[str, str]) -> str:
+    def categorize(self, tx: dict[str, Any], defaults: dict[Any, str]) -> str:
         """Categorize a transaction based on merchant/description or fallback.
 
         Args:

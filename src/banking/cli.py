@@ -4,9 +4,10 @@ from .sync import run_sync
 
 
 @click.group()
-def main:
+def main():
     """Banking - Plain-text accounting CLI toolchain."""
     pass
+
 
 @main.command()
 @click.option("--refresh", is_flag=True, help="Bypass cache and fetch fresh data")
@@ -17,4 +18,4 @@ def sync(refresh: bool):
 
 
 if __name__ == "__main__":
-        main()
+    main()

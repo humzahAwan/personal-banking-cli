@@ -1,0 +1,2 @@
+[console_scripts]
+banking = banking.cli:main

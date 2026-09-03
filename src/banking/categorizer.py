@@ -39,7 +39,7 @@ class Categorizer:
             except re.error as e:
                 logger.error("Invalid regex in rule '%s': %s", r.get("pattern"), e)
 
-    def categorize(self, tx: dict[str, Any], defaults: dict[Any, str]) -> str:
+    def categorize(self, tx: dict[str, Any], defaults: dict[Any, str] | None) -> str:
         """Categorize a transaction based on merchant/description or fallback.
 
         Args:
@@ -49,6 +49,12 @@ class Categorizer:
         Returns:
             The matched or fallback hledger account name.
         """
+        if not defaults:
+            raise ValueError(
+                "Default accounts missing from config."
+                "Please add default expense and income accounts to config."
+            )
+
         merchant = tx.get("merchant") or ""
         description = tx.get("description") or ""
         text = f"{merchant} {description}".strip()

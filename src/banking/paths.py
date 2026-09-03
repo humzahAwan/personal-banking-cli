@@ -31,7 +31,7 @@ class Paths:
     @property
     def project_root(self) -> Path:
         """Always points to project root folder"""
-        return Path(__file__).resolve().parent.parent
+        return Path(__file__).resolve().parents[2]
 
     @property
     def data_dir(self) -> Path:

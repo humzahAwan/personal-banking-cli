@@ -6,6 +6,7 @@ src/banking/cli.py
 src/banking/client.py
 src/banking/formatter.py
 src/banking/paths.py
+src/banking/reset.py
 src/banking/sync.py
 src/banking/test_connection.py
 src/banking.egg-info/PKG-INFO

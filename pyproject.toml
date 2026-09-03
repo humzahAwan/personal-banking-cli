@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build-meta"
+
+[project]
+name = "banking"
+version = "0.1.0"
+description = "Plain-text accounting CLI toolchain"
+readme = "PLAN.md"
+requires-python = "=3.11"
+dependencies = [
+	"requests",
+	"pyyaml",
+	"python-dotenv",
+	"click"
+]
+
+[project.scripts]
+banking = "src.sli:main"

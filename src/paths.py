@@ -1,5 +1,4 @@
 import os
-from dataclasses import dataclass
 from pathlib import Path
 
 
@@ -13,11 +12,29 @@ def _get_xdg_dir(env_var: str, default_subpath: str, app_name: str = "banking") 
     return target
 
 
-@dataclass
 class Paths:
-    config_dir: Path = _get_xdg_dir("XDG_CONFIG_HOME", ".config")
+        
+    def __init__(self):
+    config_dir: Path = get_xdg_dir("XDG_CONFIG_HOME", ".config")
     cache_dir: Path = _get_xdg_dir("XDG_CACHE_HOME", ".cache")
     state_dir: Path = _get_xdg_dir("XDG_STATE_HOME", ".local/state")
+    
+
+    @property
+    def project_root(self) -> Path:
+        """Always points to project root folder"""
+        return Path(__file__).resolve().parent.parent
+
+
+    @property
+    def data_dir(self) -> Path:
+        return self.project_root / "data"
+
+
+    @property
+    def master_journal(self) -> Path:
+        return self.data_dir/ "all.journal"
+
 
     @property
     def config_file(self) -> Path:
@@ -29,6 +46,7 @@ class Paths:
             return local_config
         return self.config_dir / "config.yaml"
 
+
     @property
     def rules_file(self) -> Path:
         """Looks for rules.yaml in current working directory first, then ~/.config/banking/."""
@@ -37,6 +55,7 @@ class Paths:
             return local_rules
         return self.config_dir / "rules.yaml"
 
+
     @property
     def sync_state_file(self) -> Path:
         return self.state_dir / "sync_state.json"
@@ -44,6 +63,7 @@ class Paths:
 
 PATHS = Paths()
 paths = PATHS
+
 
 if __name__ == "__main__":
     print(f"Config Dir:     {PATHS.config_dir}")

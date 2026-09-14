@@ -6,6 +6,7 @@ balances.
 
 import re
 from dataclasses import dataclass
+from datetime import datetime
 
 from .paths import PATHS
 
@@ -44,6 +45,34 @@ def get_balances() -> list[OpeningBalance]:
                         )
                     )
     return balances
+
+
+def set_opening_balance(
+    account: str, amount: float, date: str | None = None, desc: str | None = None
+) -> None:
+
+    if not date:
+        date = str(datetime.today().strftime("%Y-%m-%d"))
+
+    if not desc:
+        desc = f"Opening Balance - {account.split(':')[-1]}"
+    if amount >= 0:
+        account_str = f"£{amount:.2f}"
+        equity_str = f"-£{amount:.2f}"
+    else:
+        account_str = f"-£{abs(amount):.2f}"
+        equity_str = f"£{abs(amount):.2f}"
+
+    entry = (
+        f"\n{date} * Opening Balance - {account}\n"
+        f"    {account:<42} {account_str:>10}\n"
+        f"    {'equity:opening-balances':<42} {equity_str:>10}\n"
+    )
+
+    file = PATHS.opening_balances
+
+    with open(file, "a") as f:
+        f.write(entry)
 
 
 if __name__ == "__main__":

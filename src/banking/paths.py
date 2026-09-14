@@ -43,6 +43,10 @@ class Paths:
         return self.project_root / "data"
 
     @property
+    def opening_balances(self) -> Path:
+        return self.data_dir / "accounts" / "opening_balances.journal"
+
+    @property
     def master_journal(self) -> Path:
         return self.data_dir / "all.journal"
 

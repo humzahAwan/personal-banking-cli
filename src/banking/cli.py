@@ -1,6 +1,6 @@
 import click
 
-from .balances import get_balances
+from .balances import get_balances, set_opening_balance
 from .reset import clear_bank_journals, clear_cache, clear_sync_state
 from .sync import run_sync
 
@@ -54,7 +54,6 @@ def reset(cache: bool, hard: bool):
 @main.group(name="opening-balances")
 def opening_balances():
     """Manage opening balances."""
-    pass
 
 
 @opening_balances.command(name="list")
@@ -62,14 +61,25 @@ def list_cmd():
     """List opening balances."""
     balances = get_balances()
 
-    click.echo(f"{'DATE':<12 } {'ACCOUNT':<38} {'AMOUNT':>10}")
-    click.echo("i" * 62)
+    click.echo(f"{'DATE':<12} {'ACCOUNT':<38} {'AMOUNT':>10}")
+    click.echo("-" * 62)
 
     for b in balances:
         click.echo(f"{b.date:<12} {b.account:<38} {b.amount:>}")
 
-@opening_balances.command
-@click.argument("account")
-@click.argument("amount", type=float)
-@click.option("--date", default=None, help="Transaction date (YYYY-MM-DD). Defaults to today.")
 
+@opening_balances.command(name="set")
+@click.argument("account", type=str, help="Account Number eg. assets:bank:home")
+@click.argument("amount", type=float, help="Opening amount. Excluding currency symbol")
+@click.option(
+    "--date", default=None, help="Transaction date (YYYY-MM-DD). Defaults to today."
+)
+@click.option(
+    "--desc",
+    "--description",
+    default=None,
+    help="Custom description. Defaults to 'Opening balance - <account_name>'",
+)
+def set_cmd(account, amount, date, desc):
+    set_opening_balance(account, amount, date, desc)
+    click.echo(f"Saved opening balance for {account}")

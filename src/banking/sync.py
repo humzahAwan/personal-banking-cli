@@ -60,7 +60,11 @@ def run_sync(use_cache: bool = True) -> None:
 
         synced_ids = set(state.get(str(acc_id), []))
 
-        transactions = session.transactions[acc_id].get("transactions", [])
+        if session.transactions:
+            transactions = session.transactions[acc_id].get("transactions", [])
+
+        else:
+            raise ValueError("Transactions for account: %s not found", acc_id)
 
         new_txs = [
             tx

@@ -1,4 +1,4 @@
-"""Categorizer module.
+"""Transaction Categorizer module.
 
 Matches transaction payees and descriptions against rules defined in rules.yaml
 to determine double-entry expense and income accounts.

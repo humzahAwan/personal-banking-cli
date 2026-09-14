@@ -1,7 +1,6 @@
 import click
 
-from banking.reset import clear_bank_journals
-
+from .balances import get_balances
 from .reset import clear_bank_journals, clear_cache, clear_sync_state
 from .sync import run_sync
 
@@ -52,5 +51,25 @@ def reset(cache: bool, hard: bool):
         )
 
 
-if __name__ == "__main__":
-    main()
+@main.group(name="opening-balances")
+def opening_balances():
+    """Manage opening balances."""
+    pass
+
+
+@opening_balances.command(name="list")
+def list_cmd():
+    """List opening balances."""
+    balances = get_balances()
+
+    click.echo(f"{'DATE':<12 } {'ACCOUNT':<38} {'AMOUNT':>10}")
+    click.echo("i" * 62)
+
+    for b in balances:
+        click.echo(f"{b.date:<12} {b.account:<38} {b.amount:>}")
+
+@opening_balances.command
+@click.argument("account")
+@click.argument("amount", type=float)
+@click.option("--date", default=None, help="Transaction date (YYYY-MM-DD). Defaults to today.")
+

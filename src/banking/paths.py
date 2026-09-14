@@ -1,3 +1,8 @@
+"""Path Helper module.
+
+To define project folders.
+"""
+
 import os
 from pathlib import Path
 
@@ -65,7 +70,6 @@ class Paths:
 
 
 PATHS = Paths()
-paths = PATHS
 
 
 if __name__ == "__main__":

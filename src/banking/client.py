@@ -37,7 +37,7 @@ class Session:
             "Content-Type": "application/json",
         }
         self.base_url: str = "https://lunchflow.app/api/v1"
-        self.accounts: dict[str, Any] | None = None
+        self.accounts: dict[str, Any] = {}
         self.transactions: dict[int, Any] = {}
 
     def fetch_accounts(self, use_cache: bool = True) -> None:
@@ -71,7 +71,6 @@ class Session:
         Args:
             use_cache: If True, load from cache if available on disk.
         """
-
         cache_file = PATHS.cache_dir / f"{acc_id}_transactions.json"
 
         if use_cache and cache_file.exists():

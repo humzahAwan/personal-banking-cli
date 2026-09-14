@@ -54,7 +54,7 @@ def test_response() -> None:
         if res_tx.status_code == 200:
             tx_data = res_tx.json()
             tx_list = tx_data.get("transactions", [])
-            print(f"Retrieved {len(tx_list)} transactions.")
+            print(f"Retrieved {len(tx_list)} transactions. From {acc_name}")
             if tx_list:
                 print("Sample transaction:")
                 print(json.dumps(tx_list[0], indent=4))
@@ -63,5 +63,6 @@ def test_response() -> None:
             print(f"HTTP {res_tx.status_code}: {res_tx.text}", file=sys.stderr)
             print("-" * 60)
 
-if __name__=="__main__":
-	test_response()
+
+if __name__ == "__main__":
+    test_response()

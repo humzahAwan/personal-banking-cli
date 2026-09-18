@@ -81,5 +81,6 @@ def list_cmd():
     help="Custom description. Defaults to 'Opening balance - <account_name>'",
 )
 def set_cmd(account, amount, date, desc):
+    """Set or update the starting balance for an accont."""
     set_opening_balance(account, amount, date, desc)
     click.echo(f"Saved opening balance for {account}")

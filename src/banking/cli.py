@@ -1,7 +1,9 @@
 import click
 
 from .balances import get_balances, set_opening_balance
+from .banner import print_banner
 from .reset import clear_bank_journals, clear_cache, clear_sync_state
+from .setup import run_setup
 from .sync import run_sync
 
 
@@ -84,3 +86,16 @@ def set_cmd(account, amount, date, desc):
     """Set or update the starting balance for an accont."""
     set_opening_balance(account, amount, date, desc)
     click.echo(f"Saved opening balance for {account}")
+
+
+@main.command(name="setup")
+def setup():
+    """Interative onboarding and account configuration wizard."""
+    print_banner()
+
+    if click.confirm("Wipe state: remove existing account data?", default=False):
+        clear_bank_journals()
+        clear_sync_state()
+        click.echo("Cleared all account data (opening bank journals preserved).")
+
+    run_setup()

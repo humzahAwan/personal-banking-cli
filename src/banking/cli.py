@@ -3,6 +3,7 @@ import click
 from .balances import get_balances, set_opening_balance
 from .banner import print_banner, print_system_diagnostic
 from .reset import clear_bank_journals, clear_cache, clear_sync_state
+from .scheduler import check_status, install_schedule, remove_schedule
 from .setup import run_setup
 from .sync import run_sync
 
@@ -99,3 +100,30 @@ def setup():
         click.echo("Cleared all account data (opening bank journals preserved).")
 
     run_setup()
+
+
+@main.group(name="schedule")
+def schedule():
+    """Administer scheduled sync regime."""
+    pass
+
+
+@schedule.command(name="install")
+@click.option(
+    "--time", default="08:00", help="Sync time in 24-hr formation (e.g. 08:00)."
+)
+def schedule_install(time: str):
+    """Install sync regime."""
+    install_schedule(time_str=time)
+
+
+@schedule.command(name="status")
+def schedule_status():
+    """Check active regime."""
+    check_status()
+
+
+@schedule.command(name="revoke")
+def schedule_revoke():
+    """Revoke active regime"""
+    remove_schedule()

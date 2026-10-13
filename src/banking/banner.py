@@ -26,7 +26,7 @@ BANNER = r"""
     """
 
 
-def print_banner():
+def print_banner() -> None:
     click.clear()
     """Creates a CRT-style cyberpunk scanline animation."""
     for line in BANNER.splitlines():
@@ -50,7 +50,7 @@ def print_banner():
             time.sleep(0.02)
 
 
-def print_system_diagnostic():
+def print_system_diagnostic() -> None:
     click.secho("\n  [ SYSTEM TELEMETRY ]", fg="bright_black", bold=True)
     click.echo("  " + "─" * 45)
 

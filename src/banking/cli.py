@@ -73,7 +73,7 @@ def list_cmd():
 
 
 @opening_balances.command(name="set")
-@click.argument("account", type=str, help="Account Number eg. assets:bank:home")
+@click.argument("account", type=str, help="Account Name eg. assets:bank:home")
 @click.argument("amount", type=float, help="Opening amount. Excluding currency symbol")
 @click.option(
     "--date", default=None, help="Transaction date (YYYY-MM-DD). Defaults to today."
@@ -96,7 +96,6 @@ def setup():
     print_banner()
     print_system_diagnostic()
     run_setup()
-
 
 
 @main.group(name="schedule")

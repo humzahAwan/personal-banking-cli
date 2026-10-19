@@ -40,6 +40,9 @@ rules:
   - pattern: "(?i)NATIONWIDE B S"
     account: "expenses:housing:mortgage"
 
+  - pattern: "(?i)CONVEYANCER"
+    account: "expenses:housing:conveyancing"
+
   # ==============================================================================
   # 3. FINANCE, DEBT & REMITTANCE
   # ==============================================================================
@@ -158,7 +161,7 @@ rules:
     account: "income:education:slc"
 
   - pattern: "(?i)CASH IN P\\.O\\."
-    account: "assets:cash:deposit"
+    account: "income:cash-deposit"
 
   - pattern: "(?i)NICK|SARAH|MICHAEL SAKYI|GUSTAVO|RIESH|MARIESHA|LEWIS THOMPSON|HUGO STOCK|NEO MCGRATH|BENJAMIN HOLT|NICHOLAS BOWDEN|JENNIFER LAU|JULIUS|UNCLE KEN|FLETCHER AL|WOOLLARD|S ALADE|ELLA BUFTON|AWAN S         G  SAVINGS"
-    account: "assets:transfers:personal"
+    account: "expenses:transfers:personal"

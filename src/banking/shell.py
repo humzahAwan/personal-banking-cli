@@ -3,6 +3,7 @@
 import click
 
 from .banner import print_banner, print_system_diagnostic
+from .reports import report_bs, report_spend
 from .scheduler import check_status
 from .setup import run_setup
 from .sync import run_sync
@@ -15,6 +16,8 @@ def print_help_menu() -> None:
     click.echo("  setup             Run account onboarding wizard")
     click.echo("  sync              Synchronize transactions from bank feeds")
     click.echo("  schedule          Check background sync timer status")
+    click.echo("  balances          Check liquid balances and credit card liabilty")
+    click.echo("  spend             Time series spend analystics")
     click.echo("  clear             Clear screen and reprint banner")
     click.echo("  help              Display this command menu")
     click.echo("  exit / quit       Exit the banking shell\n")
@@ -28,7 +31,13 @@ def run_interactive_shell() -> None:
 
     while True:
         try:
-            cmd = click.prompt("banking", prompt_suffix=": ").strip().lower()
+            raw_input = click.prompt("banking", prompt_suffix=": ").strip().lower()
+            if not raw_input:
+                continue
+
+            raw_input = raw_input.split()
+            cmd = raw_input[0]
+            args = raw_input[1:]
 
             if cmd in ("exit", "quit", "q"):
                 click.echo("Session closed. Goodbye!")
@@ -48,13 +57,24 @@ def run_interactive_shell() -> None:
             elif cmd == "schedule":
                 check_status()
 
+            elif cmd == "balances":
+                click.echo("Reading balances...")
+                report_bs()
+
+            elif cmd == "spend":
+                click.echo("Writing spend report...")
+                is_monthly = "--monthly" in args
+
+                for arg in args:
+                    if arg.isdigit():
+                        depth = int(arg)
+
+                report_spend(monthly=is_monthly)
+
             elif cmd in ("clear", "banner"):
                 click.clear()
                 print_banner()
                 print_system_diagnostic()
-
-            elif cmd == "":
-                continue
 
             else:
                 click.secho(

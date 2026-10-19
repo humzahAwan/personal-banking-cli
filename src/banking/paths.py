@@ -52,21 +52,17 @@ class Paths:
 
     @property
     def config_file(self) -> Path:
-        """exposes config.yaml in the current working directory first,
-        then ~/.config/banking/."""
-
-        local_config = Path("config.yaml")
-        if local_config.is_file():
-            return local_config
+        """Always use the user's XDG config directory (~/.config/banking/config.yaml"""
         return self.config_dir / "config.yaml"
 
     @property
     def rules_file(self) -> Path:
-        """Looks for rules.yaml in current working directory first, then ~/.config/banking/."""
-        local_rules = Path("rules.yaml")
-        if local_rules.is_file():
-            return local_rules
-        return self.config_dir / "rules.yaml"
+        """Exposes user rules folder with default fallback."""
+
+        user_rules = self.config_dir / "rules.yaml"
+        if user_rules.is_file():
+            return user_rules
+        return self.project_root / "rules.yaml"
 
     @property
     def sync_state_file(self) -> Path:

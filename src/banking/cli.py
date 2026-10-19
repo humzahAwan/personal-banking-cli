@@ -5,6 +5,7 @@ from .banner import print_banner, print_system_diagnostic
 from .reset import clear_bank_journals, clear_cache, clear_sync_state
 from .scheduler import check_status, install_schedule, remove_schedule
 from .setup import run_setup
+from .shell import run_interactive_shell
 from .sync import run_sync
 
 
@@ -91,15 +92,11 @@ def set_cmd(account, amount, date, desc):
 
 @main.command(name="setup")
 def setup():
-    """Interative onboarding and account configuration wizard."""
+    """Interactive onboarding and account configuration wizard."""
     print_banner()
     print_system_diagnostic()
-    if click.confirm("Wipe state: remove existing account data?", default=False):
-        clear_bank_journals()
-        clear_sync_state()
-        click.echo("Cleared all account data (opening bank journals preserved).")
-
     run_setup()
+
 
 
 @main.group(name="schedule")
@@ -127,3 +124,9 @@ def schedule_status():
 def schedule_revoke():
     """Revoke active regime"""
     remove_schedule()
+
+
+@main.command(name="shell")
+def shell():
+    """Launch the interactive banking terminal shell."""
+    run_interactive_shell()

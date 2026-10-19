@@ -57,24 +57,24 @@ def print_system_diagnostic() -> None:
     # python & conda environment.
     conda_env = os.environ.get("CONDA_DEFAULT_ENV", "system")
     py_ver = f"{sys.version.split()[0]} (env: {conda_env})"
-    click.secho(f"  • {'Python Runtime':<18} : {py_ver}", fg="cyan")
+    click.secho(f"  + {'Python Runtime':<18} : {py_ver}", fg="cyan")
 
     # Check hledger installation.
     hledger_path = shutil.which("hledger")
     hledger_status = (
         "INSTALLED" if hledger_path else "NOT FOUND (Required for report engine!)"
     )
-    click.secho(f"  • {'hledger Binary':<18} : {hledger_status}", fg="cyan")
+    click.secho(f"  + {'hledger Binary':<18} : {hledger_status}", fg="cyan")
 
     # Check existing config files.
     has_env = (PATHS.project_root / ".env").exists()
     has_config = PATHS.config_file.exists()
     click.secho(
-        f"  • {'API Key (.env)':<18} : {'FOUND' if has_env else 'NOT CONFIGURED'}",
+        f"  + {'API Key (.env)':<18} : {'FOUND' if has_env else 'NOT CONFIGURED'}",
         fg="cyan",
     )
     click.secho(
-        f"  • {'Config File':<18} : {'FOUND' if has_config else 'NOT FOUND (Creating..)'}",
+        f"  + {'Config File':<18} : {'FOUND' if has_config else 'NOT FOUND (Creating..)'}",
         fg="cyan",
     )
 
@@ -87,11 +87,11 @@ def print_system_diagnostic() -> None:
     ]
     has_opening = (accounts_dir / "opening_balances.journal").exists()
     click.secho(
-        f"  • {'Bank Feeds':<18} : {len(bank_journals)} active journals",
+        f"  + {'Bank Feeds':<18} : {len(bank_journals)} active journals",
         fg="cyan",
     )
     click.secho(
-        f"  • {'Opening Balances':<18} : {'FOUND' if has_opening else 'NOT CONFIGURED'}",
+        f"  + {'Opening Balances':<18} : {'FOUND' if has_opening else 'NOT CONFIGURED'}",
         fg="cyan",
     )
     click.echo("  " + "─" * 45 + "\n")

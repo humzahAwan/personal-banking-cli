@@ -10,6 +10,7 @@ from dotenv import load_dotenv, set_key
 
 from .client import Session
 from .paths import PATHS
+from .reset import clear_bank_journals, clear_sync_state
 from .sync import run_sync
 
 load_dotenv()
@@ -73,6 +74,11 @@ def configure_accounts(account_list) -> None:
 
 
 def run_setup():
+    if click.confirm("Wipe state: remove existing account data?", default=False):
+        clear_bank_journals()
+        clear_sync_state()
+        click.echo("Cleared all account data (opening bank journals preserved).")
+
     ensure_api_key()
     session = Session()
     session.fetch_accounts(use_cache=False)

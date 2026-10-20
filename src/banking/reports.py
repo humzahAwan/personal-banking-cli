@@ -81,7 +81,7 @@ def _print_tree_node(
         )
 
 
-def report_account(tree: bool, depth: int | None = None) -> None:
+def report_accounts(tree: bool, depth: int | None = None) -> None:
 
     if tree:
         accounts = _get_accounts_list()

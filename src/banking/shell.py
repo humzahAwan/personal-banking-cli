@@ -3,7 +3,7 @@
 import click
 
 from .banner import print_banner, print_system_diagnostic
-from .reports import report_account, report_bs, report_spend
+from .reports import report_accounts, report_bs, report_spend
 from .scheduler import check_status
 from .setup import run_setup
 from .sync import run_sync
@@ -80,7 +80,7 @@ def run_interactive_shell() -> None:
                 is_tree = "--tree" in args
                 depth = read_depth(args)
 
-                report_account(tree=is_tree, depth=depth)
+                report_accounts(tree=is_tree, depth=depth)
 
             elif cmd in ("clear", "banner"):
                 click.clear()

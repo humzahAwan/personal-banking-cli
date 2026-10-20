@@ -1,11 +1,15 @@
+from enum import IntEnum
+from os import wait
+
 import click
 
 from .balances import get_balances, set_opening_balance
 from .banner import print_banner, print_system_diagnostic
+from .reports import report_accounts, report_bs
 from .reset import clear_bank_journals, clear_cache, clear_sync_state
 from .scheduler import check_status, install_schedule, remove_schedule
 from .setup import run_setup
-from .shell import run_interactive_shell
+from .shell import read_depth, run_interactive_shell
 from .sync import run_sync
 
 
@@ -129,3 +133,22 @@ def schedule_revoke():
 def shell():
     """Launch the interactive banking terminal shell."""
     run_interactive_shell()
+
+
+@main.command(name="balances")
+def view_balances():
+    """Create balance sheet."""
+    report_bs()
+
+
+@main.command(name="accounts")
+@click.option(
+    "--tree",
+    "-t",
+    is_flag=True,
+    default=False,
+    help="Display accounts as a hierarchical Unicode tree",
+)
+@click.option("--depth", "-d", type=int, default=None, help="Limit display depth")
+def print_accounts(tree, depth):
+    report_accounts(tree, depth)

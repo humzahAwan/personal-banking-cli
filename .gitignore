@@ -12,3 +12,6 @@ venv/
 
 # Transaction Journals
 data/
+
+# pip 
+*.egg-info/

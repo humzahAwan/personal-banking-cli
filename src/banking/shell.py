@@ -3,7 +3,7 @@
 import click
 
 from .banner import print_banner, print_system_diagnostic
-from .reports import report_bs, report_spend
+from .reports import report_account, report_bs, report_spend
 from .scheduler import check_status
 from .setup import run_setup
 from .sync import run_sync
@@ -18,9 +18,16 @@ def print_help_menu() -> None:
     click.echo("  schedule          Check background sync timer status")
     click.echo("  balances          Check liquid balances and credit card liabilty")
     click.echo("  spend             Time series spend analystics")
+    click.echo("  accounts          Return all hlsdger accounts")
     click.echo("  clear             Clear screen and reprint banner")
     click.echo("  help              Display this command menu")
     click.echo("  exit / quit       Exit the banking shell\n")
+
+
+def read_depth(args):
+    for arg in args:
+        if arg.isdigit():
+            return int(arg)
 
 
 def run_interactive_shell() -> None:
@@ -64,12 +71,16 @@ def run_interactive_shell() -> None:
             elif cmd == "spend":
                 click.echo("Writing spend report...")
                 is_monthly = "--monthly" in args
-
-                for arg in args:
-                    if arg.isdigit():
-                        depth = int(arg)
+                depth = read_depth(args)
 
                 report_spend(monthly=is_monthly)
+
+            elif cmd == "accounts":
+                click.echo("Collecting all hledger accounts")
+                is_tree = "--tree" in args
+                depth = read_depth(args)
+
+                report_account(tree=is_tree, depth=depth)
 
             elif cmd in ("clear", "banner"):
                 click.clear()

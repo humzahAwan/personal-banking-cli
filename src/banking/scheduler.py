@@ -1,3 +1,9 @@
+"""
+Sync Scheduler.
+
+Scheduler module for creating sync schedules.
+"""
+
 import shutil
 import subprocess
 from os import sync

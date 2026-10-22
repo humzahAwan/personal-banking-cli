@@ -1,4 +1,5 @@
-"""Transaction Formatter module.
+"""
+Transaction Formatter module.
 
 Converts Lunchflow transaction dictionaries into double-entry plain-text
 accounting format compliant with hledger.

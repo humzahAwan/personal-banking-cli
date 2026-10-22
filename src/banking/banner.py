@@ -1,4 +1,7 @@
 """
+Banner and diagnostic printer.
+
+
 These functions are used to create the setup wizard banner.
 """
 

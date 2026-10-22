@@ -1,5 +1,7 @@
-"""This module is called as part of the process for resetting the accounting system.
+"""
+System resetter.
 
+This module is called as part of the process for resetting the accounting system.
 In the case that a reset was needed to fix some error. These function provide
 clean directories before resync.
 """

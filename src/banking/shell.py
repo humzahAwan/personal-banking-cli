@@ -1,4 +1,8 @@
-"""Interactive Terminal Shell (REPL) for the Banking CLI."""
+"""
+Banking shell module.
+
+Interactive Terminal Shell (REPL) for the Banking CLI.
+"""
 
 import click
 

@@ -1,4 +1,5 @@
-"""Path Helper module.
+"""
+Path Helper module.
 
 To define project folders.
 """

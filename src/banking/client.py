@@ -1,4 +1,5 @@
-"""Lunchflow API Client module.
+"""
+Lunchflow API Client module.
 
 Handles authentication, fetching accounts, fetching transactions,
 and local disk caching.

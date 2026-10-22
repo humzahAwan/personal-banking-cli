@@ -1,4 +1,6 @@
 """
+Setup wizard module.
+
 This module exposes logic consumed by the cli banking setup wizard.
 """
 

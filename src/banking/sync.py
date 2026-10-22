@@ -1,4 +1,5 @@
-"""Sync Orchestrator module.
+"""
+Sync Orchestrator module.
 
 Coordinates fetching transactions, deduplicating with sync_state.json,
 categorizing, and appending to hledger plain-text accounting journals.

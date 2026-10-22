@@ -1,3 +1,10 @@
+"""
+CLI commander.
+
+This module exposes the commands that administer the cli for
+the banking procedures.
+"""
+
 from enum import IntEnum
 from os import wait
 
@@ -5,6 +12,7 @@ import click
 
 from .balances import get_balances, set_opening_balance
 from .banner import print_banner, print_system_diagnostic
+from .plotting import plot_expenses
 from .reports import report_accounts, report_bs
 from .reset import clear_bank_journals, clear_cache, clear_sync_state
 from .scheduler import check_status, install_schedule, remove_schedule
@@ -80,7 +88,10 @@ def list_cmd():
 @click.argument("account", type=str, help="Account Name eg. assets:bank:home")
 @click.argument("amount", type=float, help="Opening amount. Excluding currency symbol")
 @click.option(
-    "--date", default=None, help="Transaction date (YYYY-MM-DD). Defaults to today."
+    "--date",
+    "-d",
+    default=None,
+    help="Transaction date (YYYY-MM-DD). Defaults to today.",
 )
 @click.option(
     "--desc",
@@ -105,12 +116,11 @@ def setup():
 @main.group(name="schedule")
 def schedule():
     """Administer scheduled sync regime."""
-    pass
 
 
 @schedule.command(name="install")
 @click.option(
-    "--time", default="08:00", help="Sync time in 24-hr formation (e.g. 08:00)."
+    "--time", "-t", default="08:00", help="Sync time in 24-hr formation (e.g. 08:00)."
 )
 def schedule_install(time: str):
     """Install sync regime."""
@@ -152,3 +162,15 @@ def view_balances():
 @click.option("--depth", "-d", type=int, default=None, help="Limit display depth")
 def print_accounts(tree, depth):
     report_accounts(tree, depth)
+
+
+@main.group(name="plot")
+def plot():
+    """Plot figures."""
+
+
+@plot.command(name="expenses")
+@click.option("period", "-p", default="this month", help="Hledger time period.")
+@click.option("depth", "-d", type=int, default=2, help="Limit display depth.")
+def draw_expense_plot(period, depth):
+    plot_expenses(period=period, depth=depth)

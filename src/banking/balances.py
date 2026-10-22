@@ -1,4 +1,5 @@
-"""Opening Balance Management module.
+"""
+Opening Balance Management module.
 
 This scripts exposes functions that will help manage and review opening
 balances.
